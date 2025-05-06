@@ -6,6 +6,7 @@ import Header from "./Components/Header";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import About from "./Pages/About";
+import Footer from "./Components/Footer";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route element={<SignUp />} path="/signup" />
         <Route element={<Login />} path="/login" />
       </Routes>
+      <Footer/>
     </>
   );
 }
