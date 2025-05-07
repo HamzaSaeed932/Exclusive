@@ -8,7 +8,6 @@ import Login from "./Pages/Login";
 import About from "./Pages/About";
 import Footer from "./Components/Footer";
 
-
 function App() {
   return (
     <>
