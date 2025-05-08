@@ -7,16 +7,19 @@ import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import About from "./Pages/About";
 import Footer from "./Components/Footer";
-
+import ProtectedRoute from './Components/ProtectedRoute';
 function App() {
   return (
     <>
       <TopBanner />
       <Header />
       <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<Contact />} path="/contact" />
-        <Route element={<About />} path="/about" />
+        <Route element={
+          <ProtectedRoute><Home /></ProtectedRoute>} path="/" />
+        <Route element={
+           <ProtectedRoute><Contact /></ProtectedRoute>} path="/contact" />
+        <Route element={
+          <ProtectedRoute><About /></ProtectedRoute>} path="/about" />
         <Route element={<SignUp />} path="/signup" />
         <Route element={<Login />} path="/login" />
       </Routes>
