@@ -2,8 +2,9 @@ import React,{useState} from 'react'
 import { FiSearch,FiHeart,FiShoppingCart } from 'react-icons/fi';
 import { FaUser, FaBoxOpen, FaTimesCircle, FaStar, FaSignOutAlt } from 'react-icons/fa';
 import { Link,useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';
+
 const Header = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
     const navigate=useNavigate();

@@ -3,8 +3,8 @@ import Rating from './Rating'
 import { FiHeart, FiEye } from 'react-icons/fi';
 
 const ProductCard = ({product}) => {
-    console.log(product)
-  return (
+
+    return (
     <div className='w-[270px] h-[350px]  font-poppins relative mr-[30px]'>
 
         <div className='w-[270px] h-[250px]  flex justify-center items-center bg-gray-100 rounded relative parent-div'>

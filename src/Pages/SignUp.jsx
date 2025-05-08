@@ -1,12 +1,21 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
+import { createUserWithEmailAndPassword,GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate= useNavigate();
 
+   // Redirect if already logged in
+   useEffect(() => {
+    if (auth.currentUser) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
+
+  //Sign up with Email & Password
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
@@ -16,6 +25,17 @@ const SignUp = () => {
       console.error('Error signing up:', error.message);
     }
   };
+
+  //Sign up with google
+ const provider = new GoogleAuthProvider();
+ const handleGoogleSignUp = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+    navigate('/');
+  } catch (error) {
+    console.error('Google sign-in error:', error.message);
+  }
+};
 
   return (
     <div className="pt-15 pb-[140px] flex items-center">
@@ -35,19 +55,19 @@ const SignUp = () => {
             <input
               type="text"
               placeholder="Name"
-              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px]"
+              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px] px-1"
             />
             <input
               type="text"
               placeholder="Email or Phone Number"
-              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px]"
+              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px] px-1"
               value={email}
                onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="Password"
               placeholder="Password"
-              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px]"
+              className="border-b border-[rgba(0,0,0,0.2)] py-2 w-[370px] px-1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -58,7 +78,7 @@ const SignUp = () => {
             />
           </form>
           <div>
-            <div className="border border-[rgba(0,0,0,0.4)] rounded flex justify-center p-4 gap-4 items-center mt-4 mb-6 ">
+            <div className="border border-[rgba(0,0,0,0.4)] rounded flex justify-center p-4 gap-4 items-center mt-4 mb-6 cursor-pointer"  onClick={handleGoogleSignUp}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
