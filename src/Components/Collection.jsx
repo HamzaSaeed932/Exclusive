@@ -1,43 +1,31 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import ProductCard from './ProductCard'
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import {db} from '../firebase/firebase';
+
 const Collection = () => {
-  let Products=[{
-    productName:'HAVIT HV-G92 Gamepad',
-    newPrice:'120',
-    prevPrice:'160',
-    rating:3,
-    ratingValue:88,
-    percentage:-40,
-    productImage:'./product/1.png'
-  },
-  {
-    productName:'AK-900 Wired Keyboard',
-    newPrice:'960',
-    prevPrice:'1160',
-    rating:4,
-    ratingValue:75,
-    percentage:35,
-    productImage:'./product/2.png'
-  },
-  {
-    productName:'IPS LCD Gaming Monitor',
-    newPrice:'370',
-    prevPrice:'400',
-    rating:5,
-    ratingValue:99,
-    percentage:30,
-    productImage:'./product/3.png'
-  },
-  {
-    productName:'S-Series Comfort Chair ',
-    newPrice:'375',
-    prevPrice:'400',
-    rating:5,
-    ratingValue:99,
-    percentage:25,
-    productImage:'./product/4.png'
-  }]
+
+  const [fetchData,setFetchData]=useState([]);
+
+  // Fetch products from Firestore
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "Products"));
+        const productsArray = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setFetchData(productsArray);
+      } catch (error) {
+        console.error("Error fetching products: ", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className='w-[1170px] m-auto mb-[60px]'>
        
@@ -55,8 +43,8 @@ const Collection = () => {
         </div>
 
         <div className='flex'>
-          {Products.map((product,index)=>(
-             <ProductCard product={product} key={index}/>
+          {fetchData.map((Item,index)=>(
+             <ProductCard item={Item} key={index}/>
             ))}
         </div>
 
